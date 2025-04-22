@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
-      
+
 env:
   PROJECT_ID: swift-implement-405417
   REGION: us-central1
@@ -36,4 +36,10 @@ jobs:
             --image=${{ env.IMAGE }} \
             --platform=managed \
             --region=${{ env.REGION }} \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --port=3000
+        
+
+
+
+            
