@@ -29,11 +29,6 @@ jobs:
         with:
           project_id: ${{ env.PROJECT_ID }}
 
-      - name: Enable APIs (Optional)
-        run: |
-          gcloud services enable run.googleapis.com \
-            artifactregistry.googleapis.com
-
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy ${{ env.SERVICE }} \
