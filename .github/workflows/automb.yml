@@ -38,6 +38,7 @@ jobs:
             --region=${{ env.REGION }} \
             --allow-unauthenticated \
             --port=3000
+            --timeout=600s
         
 
 
