@@ -1,12 +1,20 @@
-name: Deploy to Cloud Run
+name: Deploy Metabase to Cloud Run
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+
+env:
+  PROJECT_ID: swift-implement-405417
+  REGION: us-central1
+  SERVICE: metabase
+  IMAGE: metabase/metabase:latest  # Change to your own if using Dockerfile
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,18 +24,20 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
-      - name: Set up gcloud CLI
+      - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          project_id: ${{ env.PROJECT_ID }}
 
-      - name: Deploy Metabase to Cloud Run
+      - name: Enable APIs (Optional)
         run: |
-          gcloud run deploy metabase \
-            --image=metabase/metabase:latest \
+          gcloud services enable run.googleapis.com \
+            artifactregistry.googleapis.com
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ env.SERVICE }} \
+            --image=${{ env.IMAGE }} \
             --platform=managed \
-            --region=us-central1 \
-            --project=${{ secrets.GCP_PROJECT_ID }} \
-            --port=3000 \
+            --region=${{ env.REGION }} \
             --allow-unauthenticated
-            
