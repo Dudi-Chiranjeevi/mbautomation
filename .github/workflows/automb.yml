@@ -37,8 +37,9 @@ jobs:
             --platform=managed \
             --region=${{ env.REGION }} \
             --allow-unauthenticated \
-            --port=3000
-            --timeout=600s
+            --port=3000 \
+            --timeout=600s \
+            --memory=1Gi \
         
 
 
