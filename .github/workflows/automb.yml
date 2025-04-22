@@ -40,6 +40,7 @@ jobs:
             --port=3000 \
             --timeout=600s \
             --memory=1Gi \
+            --set-env-vars PORT=8080
         
 
 
